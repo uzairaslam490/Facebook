@@ -17,6 +17,7 @@ use App\Http\Controllers\PostController;
 */
 
 Route::match(['get','post'],'/', [UsersController::class, 'index'])->name('home');
+Route::match(['get','post'],'/Profile/{user}', [UsersController::class, 'user'])->name('timeline');
 Route::match(['get','post'],'/createpost/{id}', [UsersController::class, 'create'])->name('createpost');
 Route::match(['get','post'],'/addpost/{id}', [PostController::class, 'update'])->name('addpost');
 

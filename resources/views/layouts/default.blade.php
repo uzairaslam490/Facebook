@@ -12,7 +12,7 @@
             <h3 class="navbar-brand mr-5">Learning Laravel</h3>
             <div class="navbar-nav ml-auto">
                 <div class="container">
-                    <a href="{{route('home')}}" class="nav-link text-light">Timeline</a>
+                    <a href="{{route('timeline',['user' => 'Muhammad Uzair'])}}" class="nav-link text-light">Timeline</a>
                     <a href="{{route('createpost', ['id' => 1])}}" class="nav-link text-light">CreatePost</a>
                 </div>
             </div>
