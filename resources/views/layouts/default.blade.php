@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Facebook</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body class="text-white" style="background-color: #1C1C1C">
@@ -12,12 +13,11 @@
             <h3 class="navbar-brand mr-5">Learning Laravel</h3>
             <div class="navbar-nav ml-auto">
                 <div class="container">
-                    <a href="{{route('timeline',['user' => 'Muhammad Uzair'])}}" class="nav-link text-light">Timeline</a>
-                    <a href="{{route('createpost', ['id' => 1])}}" class="nav-link text-light">CreatePost</a>
+                   @yield('routes')
                 </div>
             </div>
         </nav>
-    <main class="mt-5 text-center" style="min-height: 500px">
+    <main class="mt-5" style="min-height: 500px">
         @yield('page-content')
     </main>
     <footer class="lead text-center mt-5">
