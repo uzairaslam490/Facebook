@@ -9,15 +9,13 @@ use Illuminate\Http\Request;
 class UsersController extends Controller
 {
     /**
-     * Store a newly created resource in storage.
+     * Display a listing of the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $user = User::all()->where('name', $request->input('name'));
-        return view('login', compact('user'));
+        return view('login');
     }
     
     /**
@@ -41,16 +39,16 @@ class UsersController extends Controller
     public function confirmlogin(Request $request)
     {
         $name = $request->input('name');
+        $password = $request->input('password');
         $users = User::all();
         $posts = Post::all();
-        foreach($users as $user){
-            if($user->name == $name){
-                redirect('/Profile/'.$name)->with('posts',$posts);
-            }
-            else{
-                redirect('/')->with('message', 'Incorrect Username/Password');
-            }
-        }
+        dd($users);
+        // if($users->name == $name && $users->password ==$password){
+        //     return redirect('/Profile/'.$name)->with('posts', $posts);
+        // }
+        // else{
+        //     return redirect('/')->with('message', 'Incorrect Username/Password');
+        // }
     }
 
     /**

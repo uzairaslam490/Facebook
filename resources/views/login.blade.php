@@ -6,12 +6,17 @@
             <div class="row">
                 <div class="offset-sm-3 col-sm-6" style="min-height:500px;">
                 <br><br><br>
+                    @if(session()->has('message'))
+                    <div class="mb-4">
+                        <alert class="alert alert-danger form-control">{{session()->get('message')}}</alert>
+                    </div>
+                    @endif
                     <div class="card bg-secondary text-light">
                         <div class="card-header">
                             <h1>Welcome Back!!</h1>
                         </div>
                         <div class="card-body bg-dark">
-                        <form action="{{route('timeline', ['user' => $user])}}"  method="POST">
+                        <form action="{{route('confirmlogin')}}"  method="POST">
                             @csrf
                             <div class="form-group">
                                 <label for="name"><span class="FieldInfo">Username:</span></label>
