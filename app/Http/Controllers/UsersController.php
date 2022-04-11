@@ -40,15 +40,16 @@ class UsersController extends Controller
     {
         $name = $request->input('name');
         $password = $request->input('password');
-        $users = User::all();
+        $users = User::all('id','name','password');
         $posts = Post::all();
-        dd($users);
-        // if($users->name == $name && $users->password ==$password){
-        //     return redirect('/Profile/'.$name)->with('posts', $posts);
-        // }
-        // else{
-        //     return redirect('/')->with('message', 'Incorrect Username/Password');
-        // }
+        foreach($users as $user){
+            if($user->name === $name && $user->password === $password){
+                $_SESSION['username'] = $user->name;
+                $_SESSION['userid'] = $user->id;
+                return redirect('/Profile/'.$name)->with('posts', $posts);
+            }
+        }
+        return redirect('/')->with('message', 'Incorrect Username/Password');
     }
 
     /**
