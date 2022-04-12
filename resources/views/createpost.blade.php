@@ -1,10 +1,11 @@
 @extends('layouts.default')
 
+@foreach($user as $u)
 @section('routes')
-<a href="{{route('timeline',['user' => 'Muhammad Uzair'])}}" class="nav-link text-light">Timeline</a>
-<a href="{{route('createpost', ['id' => 1])}}" class="nav-link text-light">CreatePost</a>
+<a href="{{route('timeline',['userid' => $u->id])}}" class="nav-link text-light">Timeline</a>
+<a href="{{route('createpost', ['id' => $u->id])}}" class="nav-link text-light">CreatePost</a>
 @endsection
-
+@endforeach
 @section('page-content')
 <div class="container mt-4" style="min-height: 533px;">
     <div class="row">

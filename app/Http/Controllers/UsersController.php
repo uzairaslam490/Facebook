@@ -21,12 +21,12 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  string $name  
+     * @param  int $id  
      * @return \Illuminate\Http\Response
      */
-    public function user($name)
+    public function user($id)
     {
-        $user = User::all()->where('name', $name);
+        $user = User::all()->where('id', $id);
         return view('index', compact('user'));
     }
 
@@ -44,9 +44,11 @@ class UsersController extends Controller
         $posts = Post::all();
         foreach($users as $user){
             if($user->name === $name && $user->password === $password){
-                $_SESSION['username'] = $user->name;
-                $_SESSION['userid'] = $user->id;
-                return redirect('/Profile/'.$name)->with('posts', $posts);
+                $username = $user->name;
+                $userid = $user->id;
+                session('user', $username);
+                session('id', $userid);
+                return redirect('/Profile/'.$userid)->with('user', $username);
             }
         }
         return redirect('/')->with('message', 'Incorrect Username/Password');
@@ -59,7 +61,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('createpost');
+        
     }
 
     /**
@@ -81,7 +83,8 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        
+        $user = User::all()->where('id', $id);
+        return view('createpost', compact('user'));   
     }
 
     /**
