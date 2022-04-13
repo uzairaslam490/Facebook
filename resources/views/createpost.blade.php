@@ -20,13 +20,14 @@
             <h2>Create a post</h2>
             <form action="{{route('addpost', ['id' => $u->id])}}" method="POST" enctype="multipart/form-data">
                 @csrf
+                
+                <textarea name="post" id="post" cols="30" rows="10" class="form-control" placeholder="Something on your mind..."></textarea><br>
                 <div class="form-group">
                     <div class="custom-file">
                         <input class="custom-file-input" type="File" name="image" id="ImageSelect" value="">
                         <label for="ImageSelect" class="custom-file-label">Select Image</label>
                     </div>
                 </div>
-                <textarea name="post" id="post" cols="30" rows="10" class="form-control" placeholder="Something on your mind..."></textarea>
                 <button type="Submit" name="Submit" class="btn btn-primary form-control" style="float: left">Post</button>
             </form>
             <br>
