@@ -69,11 +69,19 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'post' => 'required',
+            'image' => 'required',
+        ]);
+        $newImageName = uniqid() . '-' . 'PostImage' . '.' . 
+        $request->image->extension();
+        $request->image->move(public_path('images'), $newImageName);
         Post::create([
             'post' => $request->input('post'),
-            'image' => $request->input('image'),
+            'image' => $newImageName,
             'user_id' =>  $id    
         ]);
+        
         return redirect('/createpost/'.$id)->with('post_success','Post created successfully!');
     }
 

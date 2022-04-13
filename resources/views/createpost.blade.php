@@ -5,7 +5,7 @@
 <a href="{{route('timeline',['userid' => $u->id])}}" class="nav-link text-light">Timeline</a>
 <a href="{{route('createpost', ['id' => $u->id])}}" class="nav-link text-light">CreatePost</a>
 @endsection
-@endforeach
+
 @section('page-content')
 <div class="container mt-4" style="min-height: 533px;">
     <div class="row">
@@ -18,7 +18,7 @@
             </div>
         @endif
             <h2>Create a post</h2>
-            <form action="{{route('addpost', ['id' => 1])}}" method="POST">
+            <form action="{{route('addpost', ['id' => $u->id])}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <div class="custom-file">
@@ -34,4 +34,5 @@
             </div>
         </div>
     </div>
+    @endforeach
 @endsection
