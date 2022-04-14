@@ -24,10 +24,11 @@ class UsersController extends Controller
      * @param  int $id  
      * @return \Illuminate\Http\Response
      */
-    public function user($id)
+    public function userlogin($id)
     {
         $user = User::all()->where('id', $id);
-        return view('index', compact('user'));
+        $posts = Post::orderBy('updated_at', 'DESC')->get()->where('user_id',$id);
+        return view('index', compact('user', 'posts'));
     }
 
     /**
@@ -41,7 +42,6 @@ class UsersController extends Controller
         $name = $request->input('name');
         $password = $request->input('password');
         $users = User::all('id','name','password');
-        $posts = Post::all();
         foreach($users as $user){
             if($user->name === $name && $user->password === $password){
                 $username = $user->name;
