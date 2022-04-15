@@ -26,9 +26,10 @@ class UsersController extends Controller
      */
     public function userlogin($id)
     {
+        $UsersNotFollowed = User::where('id','!=',$id)->skip(0)->take(5)->get('name');
         $user = User::all()->where('id', $id);
         $posts = Post::orderBy('updated_at', 'DESC')->get()->where('user_id',$id);
-        return view('index', compact('user', 'posts'));
+        return view('index', compact('user', 'posts', 'UsersNotFollowed'));
     }
 
     /**
