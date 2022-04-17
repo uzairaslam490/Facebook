@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class UsersController extends Controller
 {
@@ -46,17 +49,34 @@ class UsersController extends Controller
     {
         $name = $request->input('name');
         $password = $request->input('password');
-        $users = User::all('id','name','password');
-        foreach($users as $user){
-            if($user->name === $name && $user->password === $password){
-                $username = $user->name;
-                $userid = $user->id;
-                session('user', $username);
-                session('id', $userid);
-                return redirect('/Profile/'.$userid)->with('user', $username);
+        
+        // $password = Hash::make($password);
+        // User::create([
+        //     'name' => $name,
+        //     'password' => $password
+        // ]);
+        //$users = User::all('id','name','password');
+        $user = User::where('name', $name)
+            ->first();
+        // if($user){
+        //     Auth::loginUsingId($user->id);
+        //     return redirect('/Profile/'.$user->id)->with('user', $user->name);
+        // }
+        // Auth::logout($user);
+        //foreach($users as $user){
+        //dd(Hash::check($password,$user->password));
+        //     // if($user->name === $name && $user->password === $password){
+        //     //     $username = $user->name;
+        //     //     $userid = $user->id;
+        //     //     session('user', $username);
+        //     //     session('id', $userid);
+        //     //     return redirect('/Profile/'.$userid)->with('user', $username);
+        //     // }
+            if(Auth::attempt(['name'=>$name, 'password'=>$password])){
+                return redirect()->intended('/Profile/'.$user->id)->with('user',$user->name);
             }
-        }
-        return redirect('/')->with('message', 'Incorrect Username/Password');
+        //}
+        return Redirect::to('/')->with('message', 'Incorrect Username/Password');
     }
 
     /**

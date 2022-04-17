@@ -22,7 +22,7 @@ Auth::routes();
 Route::match(['get','post'],'/', [UsersController::class, 'index'])->name('login');
 Route::match(['get','post'],'/confirmlogin', [UsersController::class, 'confirmlogin'])->name('confirmlogin');
 Route::match(['get','post'],'/Profile/{userid}', [UsersController::class, 'userlogin'])->middleware('auth')->name('timeline');
-Route::match(['get','post'],'/createpost/{id}', [UsersController::class, 'show'])->name('createpost');
+Route::match(['get','post'],'/createpost/{id}', [UsersController::class, 'show'])->middleware('auth')->name('createpost');
 Route::match(['get','post'],'/addpost/{id}', [PostController::class, 'update'])->name('addpost');
 
 
