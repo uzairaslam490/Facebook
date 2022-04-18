@@ -28,15 +28,29 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param  string $name  
+     * @return \Illuminate\Http\Response
+     */
+    public function userlogin($name)
+    {
+        $UsersNotFollowed = User::where('name','!=',$name)->skip(0)->take(5)->get('name');
+        $user = User::all()->where('name', $name)->first();
+        $posts = Post::orderBy('updated_at', 'DESC')->get()->where('user_id',$user->id);
+        return view('index', compact('user', 'posts', 'UsersNotFollowed'));
+    }
+    
+    /**
+     * Display the specified resource.
+     *
      * @param  int $id  
      * @return \Illuminate\Http\Response
      */
-    public function userlogin($id)
-    {
-        $UsersNotFollowed = User::where('id','!=',$id)->skip(0)->take(5)->get('name');
-        $user = User::all()->where('id', $id);
-        $posts = Post::orderBy('updated_at', 'DESC')->get()->where('user_id',$id);
-        return view('index', compact('user', 'posts', 'UsersNotFollowed'));
+    public function userlogout($id){
+        $user = User::where('id',$id);
+        if($user){
+            Auth::logout($user);
+            return redirect('/');
+        }
     }
 
     /**
@@ -73,7 +87,7 @@ class UsersController extends Controller
         //     //     return redirect('/Profile/'.$userid)->with('user', $username);
         //     // }
             if(Auth::attempt(['name'=>$name, 'password'=>$password])){
-                return redirect()->intended('/Profile/'.$user->id)->with('user',$user->name);
+                return redirect()->intended('/Profile/'.$user->name)->with('user',$user->name);
             }
         //}
         return Redirect::to('/')->with('message', 'Incorrect Username/Password');

@@ -2,8 +2,9 @@
 
 @foreach($user as $u)
 @section('routes')
-<a href="{{route('timeline',['userid' => $u->id])}}" class="nav-link text-light">Timeline</a>
+<a href="{{route('timeline',['userid' => $u->name])}}" class="nav-link text-light">Timeline</a>
 <a href="{{route('createpost', ['id' => $u->id])}}" class="nav-link text-light">CreatePost</a>
+<a href="{{route('logout',['id' => $u->id])}}" class="nav-item nav-link ml-5 text-danger"><i class="fas fa-user-times"></i> Logout</a>
 @endsection
 
 @section('page-content')

@@ -1,9 +1,10 @@
 @extends('layouts.default')
 
-@foreach($user as $u)
+
 @section('routes')
-<a href="{{route('timeline',['userid' => $u->id ])}}" class="nav-link text-light">Timeline</a>
-<a href="{{route('createpost', ['id' => $u->id ])}}" class="nav-link text-light">CreatePost</a>
+<a href="{{route('timeline',['userid' => $user->name ])}}" class="nav-link text-light">Timeline</a>
+<a href="{{route('createpost', ['id' => $user->id ])}}" class="nav-link text-light">CreatePost</a>
+<a href="{{route('logout',['id' => $user->id])}}" class="nav-item nav-link ml-5 text-danger"><i class="fas fa-user-times"></i> Logout</a>
 @endsection
 
 @section('page-content')
@@ -20,7 +21,7 @@
                 <div class="card-body">
                     <h4 class="card-title">
                         Posted by:
-                        <span class="ml-1 mr-1">{{$u->name}}</span> at
+                        <span class="ml-1 mr-1">{{$user->name}}</span> at
                         <span class="ml-2 mr-2">{{$post->created_at}}</span>
                     </h4>
                     <a href=""><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-comments"></i>Comment
@@ -33,7 +34,7 @@
                 </div>
             </div>
         @endforeach
-        @endforeach
+       
         </div>
         <div class="col-sm-4">
         <div class="card mt-4 bg-dark">
