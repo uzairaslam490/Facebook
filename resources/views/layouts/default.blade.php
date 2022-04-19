@@ -17,11 +17,12 @@
                 </div>
             </div>
         </nav>
-    <main class="mt-5" style="min-height: 500px">
+        @yield('header')
+    <main class="mt-2" style="min-height: 500px">
         @yield('page-content')
     </main>
         
-    <footer class="bg-dark text-white">
+    <footer class="bg-dark text-white mt-5">
             <div class="container">
                 <div class="row">
                     <div class="col">

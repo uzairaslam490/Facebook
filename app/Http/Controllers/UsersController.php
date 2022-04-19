@@ -26,6 +26,37 @@ class UsersController extends Controller
     }
     
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function signup(){
+        return view('signup');
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+     public function confirmsignup(Request $request){
+         $username = $request->input('name');
+         $password = $request->input('password');
+         $hashedpassword = Hash::make($password);
+         $email = $request->input('email');
+         request()->validate([
+             'name' => 'required',
+             'password' => 'required'
+         ]);
+         User::create([
+             'name' => $username,
+             'email' => $email,
+             'password' => $hashedpassword
+         ]);
+         return redirect('/SignUp')->with('signup-success','Signed Up Successfully!');
+     }
+    /**
      * Display the specified resource.
      *
      * @param  string $name  
