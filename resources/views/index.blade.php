@@ -13,10 +13,20 @@
     @if(session()->has('user'))
         <alert class="alert alert-success form-control">Welcome back {{session()->get('user')}} !!</alert>
     @endif
+    @if(session()->has('postdeleted_success'))
+        <alert class="alert alert-success form-control">{{session()->get('postdeleted_success')}} !!</alert>
+    @endif
         <div class="col-sm-8">
     @foreach($posts as $post)
             <div class="card mb-4 bg-dark text-white">
-                <h3 class="card-header"><span class="ml-1">{{$post->post}}</span></h3>
+                <h3 class="card-header"><span class="ml-1">{{$post->post}}</span>
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" style="float:right;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        More
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{route('deletepost',['id' => $post->id ])}}">Delete Post</a>
+                    </div>
+                </h3>
                 <img src="{{ asset('images')}}/{{ $post->image }}" style="max-height:450px; max-width:450px" class="img-fluid card-img-top">
                 <div class="card-body">
                     <h4 class="card-title">

@@ -26,17 +26,5 @@ Route::match(['get','post'],'/confirmlogin', [UsersController::class, 'confirmlo
 Route::match(['get','post'],'/Profile/{userid}', [UsersController::class, 'userlogin'])->middleware('auth')->name('timeline');
 Route::match(['get','post'],'/createpost/{id}', [UsersController::class, 'show'])->middleware('auth')->name('createpost');
 Route::match(['get','post'],'/addpost/{id}', [PostController::class, 'update'])->name('addpost');
+Route::match(['get','post'],'/deletepost/{id}', [PostController::class, 'destroy'])->name('deletepost');
 Route::match(['get','post'],'/logout/{id}', [UsersController::class, 'userlogout'])->middleware('auth')->name('logout');
-
-
-
-
-
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
