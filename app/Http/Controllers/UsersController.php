@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comments;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -155,6 +156,20 @@ class UsersController extends Controller
     {
         $user = User::all()->where('id', $id);
         return view('createpost', compact('user'));   
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function comment($id)
+    {
+        $post = Post::all()->where('id', $id)->first();
+        $user = User::all()->where('id', $post->user_id)->first();
+        $comments = Comments::all()->where('post_id',$id);
+        return view('comments', compact('post', 'comments', 'user'));   
     }
 
     /**

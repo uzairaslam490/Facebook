@@ -34,7 +34,7 @@
                         <span class="ml-1 mr-1">{{$user->name}}</span> at
                         <span class="ml-2 mr-2">{{$post->created_at}}</span>
                     </h4>
-                    <a href=""><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-comments"></i>Comment
+                    <a href="{{route('comments', ['id' => $post->id])}}"><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-comments"></i>Comment
                     0        
                     </span></a>
                     <a href=""><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-thumbs-up"></i>Like

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\PostController;
 use App\Http\Middleware\LoginRequired;
 use Illuminate\Support\Facades\Auth;
@@ -26,5 +27,7 @@ Route::match(['get','post'],'/confirmlogin', [UsersController::class, 'confirmlo
 Route::match(['get','post'],'/Profile/{userid}', [UsersController::class, 'userlogin'])->middleware('auth')->name('timeline');
 Route::match(['get','post'],'/createpost/{id}', [UsersController::class, 'show'])->middleware('auth')->name('createpost');
 Route::match(['get','post'],'/addpost/{id}', [PostController::class, 'update'])->name('addpost');
-Route::match(['get','post'],'/deletepost/{id}', [PostController::class, 'destroy'])->name('deletepost');
+Route::match(['get','post'],'/comments/{id}', [UsersController::class, 'comment'])->middleware('auth')->name('comments');
+Route::match(['get','post'],'/addcomment/{id}', [CommentsController::class, 'store'])->middleware('auth')->name('addcomment');
+Route::match(['get','post'],'/deletepost/{id}', [PostController::class, 'destroy'])->middleware('auth')->name('deletepost');
 Route::match(['get','post'],'/logout/{id}', [UsersController::class, 'userlogout'])->middleware('auth')->name('logout');
