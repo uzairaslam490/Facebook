@@ -18,6 +18,13 @@
                 </div>
             </div>
         @endif
+        @if($errors->any())
+        @foreach($errors->all() as $error)
+        <div class="mb-4">
+            <alert class="alert alert-danger form-control">{{$error}}</alert>
+        </div>
+        @endforeach
+        @endif
             <h2>Create a post</h2>
             <form action="{{route('addpost', ['id' => $u->id])}}" method="POST" enctype="multipart/form-data">
                 @csrf

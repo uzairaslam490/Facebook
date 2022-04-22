@@ -11,6 +11,13 @@
 @if(session()->has('comment_success'))
     <alert class="alert alert-success form-control">{{session()->get('comment_success')}} !!</alert>
 @endif
+@if($errors->any())
+@foreach($errors->all() as $error)
+<div class="mb-4">
+    <alert class="alert alert-danger form-control">{{$error}}</alert>
+</div>
+@endforeach
+@endif
                 <br><br>
                 @foreach($comments as $comment)
                 <div>

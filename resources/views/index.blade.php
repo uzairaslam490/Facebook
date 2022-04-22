@@ -16,6 +16,13 @@
     @if(session()->has('postdeleted_success'))
         <alert class="alert alert-success form-control">{{session()->get('postdeleted_success')}} !!</alert>
     @endif
+    @if($errors->any())
+    @foreach($errors->all() as $error)
+    <div class="mb-4">
+        <alert class="alert alert-danger form-control">{{$error}}</alert>
+    </div>
+    @endforeach
+    @endif
         <div class="col-sm-8">
     @foreach($posts as $post)
             <div class="card mb-4 bg-dark text-white">
@@ -35,7 +42,7 @@
                         <span class="ml-2 mr-2">{{$post->created_at}}</span>
                     </h4>
                     <a href="{{route('comments', ['id' => $post->id])}}"><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-comments"></i>Comment
-                    0        
+                    {{$post->comments}}        
                     </span></a>
                     <a href=""><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-thumbs-up"></i>Like
                     0         

@@ -22,6 +22,13 @@
                         <alert class="alert alert-danger form-control">{{session()->get('message')}}</alert>
                     </div>
                     @endif
+                    @if($errors->any())
+                    @foreach($errors->all() as $error)
+                    <div class="mb-4">
+                        <alert class="alert alert-danger form-control">{{$error}}</alert>
+                    </div>
+                    @endforeach
+                    @endif
                     <div class="card bg-secondary text-light">
                         <div class="card-header">
                             <h1>Welcome Back!!</h1>

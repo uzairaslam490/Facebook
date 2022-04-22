@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comments;
+use App\Models\Post;
 use Egulias\EmailValidator\Warning\Comment;
 use Illuminate\Http\Request;
 
@@ -46,6 +47,7 @@ class CommentsController extends Controller
             'comment' => $comment,
             'post_id' => $id
         ]);
+        Post::find($id)->increment('comments');
         return redirect()->back()->with('comment_success','Comment added Successfully!');
     }
 
