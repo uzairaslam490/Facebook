@@ -44,8 +44,8 @@
                     <a href="{{route('comments', ['id' => $post->id])}}"><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-comments"></i>Comment
                     {{$post->comments}}        
                     </span></a>
-                    <a href=""><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-thumbs-up"></i>Like
-                    0         
+                    <a href="{{route('likes', ['id' => $post->id])}}"><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-thumbs-up"></i>Like
+                    {{$post->likes}}         
                     </span></a>
                     <hr>
                 </div>

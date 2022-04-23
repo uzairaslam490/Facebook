@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comments;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -50,6 +51,17 @@ class PostController extends Controller
     {
         
     }
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function likes($id)
+    {
+        Post::find($id)->increment('likes');
+        return redirect()->back();
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -96,6 +108,8 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::where('id', $id);
+        $comments = Comments::where('post_id', $id);
+        $comments->delete();
         $post->delete();
         return Redirect::back()->with('postdeleted_success','Post Deleted Successfully!');
     }

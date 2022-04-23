@@ -9,7 +9,10 @@
 @section('page-content')
 <h4>Comments</h4>
 @if(session()->has('comment_success'))
-    <alert class="alert alert-success form-control">{{session()->get('comment_success')}} !!</alert>
+    <alert class="alert alert-success form-control">{{session()->get('comment_success')}}</alert>
+@endif
+@if(session()->has('comment_deleted'))
+    <alert class="alert alert-success form-control">{{session()->get('comment_deleted')}}</alert>
 @endif
 @if($errors->any())
 @foreach($errors->all() as $error)
@@ -22,11 +25,12 @@
                 @foreach($comments as $comment)
                 <div>
                     <div class="media CommentBlock">
-                        <img class="d-block img-fluid align-self-start" src="{{ asset('images')}}/Commentor.png" width="100px" height="100px">
+                        <img class="d-block img-fluid align-self" src="{{ asset('images')}}/Commentor.png" width="100px" height="100px">
                         <div class="media-body ml-2">
                             <h6 class="lead">{{$comment->name}}</h6>
                             <p class="small">{{$comment->created_at}}</p>
                             <p>{{$comment->comment}}</p>
+                            <a href="{{route('deletecomment',['id' => $comment->id ])}}">Delete</a>
                         </div>
                     </div>
                 </div>
@@ -46,7 +50,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                                             </div>
-                                            <input type="text" class="form-control" name="name" placeholder="Name">
+                                            <input type="text" class="form-control" disabled name="name" placeholder="Name" value="{{$user->name}}">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -54,7 +58,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                             </div>
-                                            <input type="email" class="form-control" name="email" placeholder="Email">
+                                            <input type="email" class="form-control" disabled name="email" placeholder="Email" value="{{$user->email}}">
                                         </div>
                                     </div>
                                     <div class="form-group">

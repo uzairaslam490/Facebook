@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comments;
 use App\Models\Post;
+use App\Models\User;
 use Egulias\EmailValidator\Warning\Comment;
 use Illuminate\Http\Request;
 
@@ -38,8 +39,10 @@ class CommentsController extends Controller
      */
     public function store(Request $request, $id)
     {
-        $name = $request->input('name');
-        $email = $request->input('email');
+        $post = Post::all()->where('id', $id)->first();
+        $user = User::all()->where('id', $post->user_id)->first();
+        $name = $user->name;
+        $email = $user->email;
         $comment = $request->input('comment');
         Comments::create([
             'name' => $name,
@@ -93,6 +96,9 @@ class CommentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comment = Comments::where('id', $id)->first();
+        Post::find($comment->post_id)->decrement('comments');
+        $comment->delete();
+        return redirect()->back()->with('comment_deleted','Comment Deleted...');
     }
 }
