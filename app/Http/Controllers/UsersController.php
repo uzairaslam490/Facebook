@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comments;
+use App\Models\LikedPosts;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -68,7 +69,8 @@ class UsersController extends Controller
         $UsersNotFollowed = User::where('name','!=',$name)->skip(0)->take(5)->get('name');
         $user = User::all()->where('name', $name)->first();
         $posts = Post::orderBy('updated_at', 'DESC')->get()->where('user_id',$user->id);
-        return view('index', compact('user', 'posts', 'UsersNotFollowed'));
+        $likedposts = LikedPosts::all()->where('user_id', $user->id);
+        return view('index', compact('user', 'posts', 'UsersNotFollowed', 'likedposts'));
     }
     
     /**

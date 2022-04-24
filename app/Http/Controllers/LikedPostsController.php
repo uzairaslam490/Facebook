@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comments;
 use App\Models\LikedPosts;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 
-class PostController extends Controller
+class LikedPostsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,9 +26,40 @@ class PostController extends Controller
      */
     public function create()
     {
-        
+        //
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function likes($id)
+    {
+        $post = Post::orderBy('updated_at', 'DESC')->get()->first();
+        LikedPosts::create([
+            'user_id' => $id,
+            'post_id' => $post->id
+        ]);
+        return redirect()->back()->with('post_success','Post Created Successfully!');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function likepost($id)
+    {
+        $post = Post::where('id',$id)->first();
+        Post::find($id)->increment('likes');
+        LikedPosts::where('post_id',$post->id)
+        ->update([
+            'Liked' => 'Yes'
+        ]);
+        return redirect()->back();
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -50,15 +79,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        
+        //
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    
 
     /**
      * Show the form for editing the specified resource.
@@ -80,19 +102,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'post' => 'required',
-            'image' => 'required',
-        ]);
-        $newImageName = uniqid() . '-' . 'PostImage' . '.' . 
-        $request->image->extension();
-        $request->image->move(public_path('images'), $newImageName);
-        Post::create([
-            'post' => $request->input('post'),
-            'image' => $newImageName,
-            'user_id' =>  $id    
-        ]);
-        return redirect('/likes/'.$id);
+        //
     }
 
     /**
@@ -103,12 +113,6 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::where('id', $id);
-        $comments = Comments::where('post_id', $id);
-        $likes = LikedPosts::where('post_id', $id);
-        $likes->delete();
-        $comments->delete();
-        $post->delete();
-        return Redirect::back()->with('postdeleted_success','Post Deleted Successfully!');
+        //
     }
 }

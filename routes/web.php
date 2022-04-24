@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\LikedPostsController;
 use App\Http\Controllers\PostController;
 use App\Http\Middleware\LoginRequired;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,7 @@ Route::match(['get','post'],'/addpost/{id}', [PostController::class, 'update'])-
 Route::match(['get','post'],'/comments/{id}', [UsersController::class, 'comment'])->middleware('auth')->name('comments');
 Route::match(['get','post'],'/addcomment/{id}', [CommentsController::class, 'store'])->middleware('auth')->name('addcomment');
 Route::match(['get','post'],'/deletecomment/{id}', [CommentsController::class, 'destroy'])->middleware('auth')->name('deletecomment');
-Route::match(['get','post'],'/likes/{id}', [PostController::class, 'likes'])->middleware('auth')->name('likes');
+Route::match(['get','post'],'/likes/{id}', [LikedPostsController::class, 'likes'])->middleware('auth')->name('likes');
+Route::match(['get','post'],'/likepost/{id}', [LikedPostsController::class, 'likepost'])->middleware('auth')->name('likepost');
 Route::match(['get','post'],'/deletepost/{id}', [PostController::class, 'destroy'])->middleware('auth')->name('deletepost');
 Route::match(['get','post'],'/logout/{id}', [UsersController::class, 'userlogout'])->middleware('auth')->name('logout');
