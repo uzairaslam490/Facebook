@@ -103,9 +103,10 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::where('id', $id);
+        $post = Post::where('id', $id)->first();
         $comments = Comments::where('post_id', $id);
         $likes = LikedPosts::where('post_id', $id);
+        unlink("images/".$post->image);
         $likes->delete();
         $comments->delete();
         $post->delete();
