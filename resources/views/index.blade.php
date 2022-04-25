@@ -24,7 +24,7 @@
     @endforeach
     @endif
         <div class="col-sm-8">
-    @foreach($posts as $post)
+        @foreach($posts as $post)
             <div class="card mb-4 bg-dark text-white">
                 <h3 class="card-header"><span class="ml-1">{{$post->post}}</span>
                     <button class="btn btn-secondary btn-sm dropdown-toggle" style="float:right;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -41,17 +41,17 @@
                         <span class="ml-1 mr-1">{{$user->name}}</span> at
                         <span class="ml-2 mr-2">{{$post->created_at}}</span>
                     </h4>
-                    @foreach($likedposts as $likedpost)
+                   
                     <a href="{{route('comments', ['id' => $post->id])}}"><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-comments"></i>Comment
                     {{$post->comments}}        
                     </span></a>
-                    @if($likedpost->Liked == 'No')
+                    
+                    @if($post->likedposts->Liked === 'No')
                     <a href="{{route('likepost', ['id' => $post->id])}}"><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-thumbs-up"></i>Like
                     {{$post->likes}}         
                     </span></a>
                     <hr>
-                    @endif
-                    @if($likedpost->Liked == 'Yes' && $likedpost->post_id == $post->id)
+                    @elseif($post->likedposts->Liked === 'Yes')
                     <a href="{{route('timeline', ['userid' => $user->name])}}"><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-thumbs-up"></i>Like
                     {{$post->likes}}         
                     </span></a>
@@ -60,8 +60,6 @@
                 </div>
             </div>
             @endforeach
-        @endforeach
-       
         </div>
         <div class="col-sm-4">
         <div class="card mt-4 bg-dark">

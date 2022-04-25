@@ -36,7 +36,7 @@ class LikedPostsController extends Controller
      */
     public function likes($id)
     {
-        $post = Post::orderBy('updated_at', 'DESC')->get()->first();
+        $post = Post::orderBy('created_at', 'DESC')->get()->first();
         LikedPosts::create([
             'user_id' => $id,
             'post_id' => $post->id

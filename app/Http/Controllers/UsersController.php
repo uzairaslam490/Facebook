@@ -68,9 +68,8 @@ class UsersController extends Controller
     {
         $UsersNotFollowed = User::where('name','!=',$name)->skip(0)->take(5)->get('name');
         $user = User::all()->where('name', $name)->first();
-        $posts = Post::orderBy('updated_at', 'DESC')->get()->where('user_id',$user->id);
-        $likedposts = LikedPosts::all()->where('user_id', $user->id);
-        return view('index', compact('user', 'posts', 'UsersNotFollowed', 'likedposts'));
+        $posts = Post::orderBy('updated_at', 'DESC')->where('user_id',$user->id)->with('likedposts')->get();
+        return view('index', compact('user', 'posts', 'UsersNotFollowed'));
     }
     
     /**

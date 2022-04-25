@@ -9,4 +9,8 @@ class LikedPosts extends Model
 {
     use HasFactory;
     protected $fillable =['Liked', 'user_id', 'post_id'];
+
+    public function post(){
+        return $this->belongsTo(Post::class);
+    }
 }
