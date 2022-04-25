@@ -46,12 +46,12 @@
                     {{$post->comments}}        
                     </span></a>
                     
-                    @if($post->likedposts->Liked === 'No')
+                    @if($post->likedposts->Liked === 'No' && $post->user_id === $post->likedposts->user_id)
                     <a href="{{route('likepost', ['id' => $post->id])}}"><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-thumbs-up"></i>Like
                     {{$post->likes}}         
                     </span></a>
                     <hr>
-                    @elseif($post->likedposts->Liked === 'Yes')
+                    @elseif($post->likedposts->Liked === 'Yes' && $post->user_id === $post->likedposts->user_id)
                     <a href="{{route('timeline', ['userid' => $user->name])}}"><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-thumbs-up"></i>Like
                     {{$post->likes}}         
                     </span></a>

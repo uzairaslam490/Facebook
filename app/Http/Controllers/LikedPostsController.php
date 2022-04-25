@@ -37,10 +37,13 @@ class LikedPostsController extends Controller
     public function likes($id)
     {
         $post = Post::orderBy('created_at', 'DESC')->get()->first();
+        $users = User::all();
+        foreach($users as $user){
         LikedPosts::create([
-            'user_id' => $id,
+            'user_id' => $user->id,
             'post_id' => $post->id
         ]);
+        }
         return redirect()->back()->with('post_success','Post Created Successfully!');
     }
 
