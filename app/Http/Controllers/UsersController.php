@@ -67,10 +67,16 @@ class UsersController extends Controller
      */
     public function userlogin($name)
     {
+        if(Auth::check()){
         $user = User::all()->where('name', $name)->first();
         $UsersNotFollowed = User::where('id','!=',$user->id)->skip(0)->take(5)->with('followeduser')->get();
         $posts = Post::orderBy('updated_at', 'DESC')->where('user_id',$user->id)->with('likedposts')->get();
         return view('index', compact('user', 'posts', 'UsersNotFollowed'));
+        }
+        else{
+            Auth::logout();
+            return redirect('/');
+        }
     }
     
     /**
