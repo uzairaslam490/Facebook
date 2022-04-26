@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comments;
+use App\Models\FollowedUsers;
 use App\Models\LikedPosts;
 use App\Models\Post;
 use App\Models\User;
@@ -56,7 +57,7 @@ class UsersController extends Controller
              'email' => $email,
              'password' => $hashedpassword
          ]);
-         return redirect('/SignUp')->with('signup-success','Signed Up Successfully!');
+         return redirect('/followedusers');
      }
     /**
      * Display the specified resource.
@@ -66,8 +67,8 @@ class UsersController extends Controller
      */
     public function userlogin($name)
     {
-        $UsersNotFollowed = User::where('name','!=',$name)->skip(0)->take(5)->get('name');
         $user = User::all()->where('name', $name)->first();
+        $UsersNotFollowed = User::where('id','!=',$user->id)->skip(0)->take(5)->with('followeduser')->get();
         $posts = Post::orderBy('updated_at', 'DESC')->where('user_id',$user->id)->with('likedposts')->get();
         return view('index', compact('user', 'posts', 'UsersNotFollowed'));
     }

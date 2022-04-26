@@ -16,6 +16,9 @@
     @if(session()->has('postdeleted_success'))
         <alert class="alert alert-success form-control">{{session()->get('postdeleted_success')}} !!</alert>
     @endif
+    @if(session()->has('followeduser_success'))
+        <alert class="alert alert-success form-control">{{session()->get('followeduser_success')}} !!</alert>
+    @endif
     @if($errors->any())
     @foreach($errors->all() as $error)
     <div class="mb-4">
@@ -77,10 +80,18 @@
             </div>
             <div class="card-body bg-dark">
                 @foreach($UsersNotFollowed as $PeopleYouMayKnow)
+                @if($PeopleYouMayKnow->followeduser->followed === 'No')
                 <img src="{{ asset('images')}}/Commentor.png" class="d-block img-fluid align-self-start" width="90" height="90">
                 <h4>{{$PeopleYouMayKnow->name}}</h4>
-                <button type="Submit" name ="Submit" class="btn btn-primary btn-sm">Follow</button>
+                <a 
+                href="{{route('followed',
+                    ['id' => $PeopleYouMayKnow->followeduser->followeduser_id,
+                     'userid'=> $user->id])}}" 
+                class="btn btn-primary btn-sm">
+                Follow
+                </a>
                 <br><br>
+                @endif
                 @endforeach
             </div>
         </div><hr>

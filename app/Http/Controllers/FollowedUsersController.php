@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LikedPosts;
-use App\Models\Post;
+use App\Models\FollowedUsers;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class LikedPostsController extends Controller
+class FollowedUsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,39 +25,34 @@ class LikedPostsController extends Controller
      */
     public function create()
     {
-        //
+        $newuser = User::orderBy('created_at', 'DESC')->get()->first();
+        $oldusers = User::orderBy('created_at', 'ASC')->where('id','!=',$newuser->id)->get();
+        foreach($oldusers as $olduser){
+            FollowedUsers::create([
+                'followeduser_id' => $olduser->id,
+                'user_id' => $newuser->id
+            ]);
+            FollowedUsers::create([
+                'followeduser_id' => $newuser->id,
+                'user_id' => $olduser->id
+            ]);
+        }
+        return redirect()->back()->with('signup-success','Signed Up Successfully!');
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function likes($id)
-    {
-        $post = Post::orderBy('created_at', 'DESC')->get()->first();
-        LikedPosts::create([
-            'user_id' => $id,
-            'post_id' => $post->id
-        ]);
-        return redirect()->back()->with('post_success','Post Created Successfully!');
-    }
-
-    /**
-     * Display the specified resource.
+     * Show the form for editing the specified resource.
      *
      * @param  int  $id
+     * @param  int  $userid
      * @return \Illuminate\Http\Response
      */
-    public function likepost($id)
-    {
-        $post = Post::where('id',$id)->first();
-        Post::find($id)->increment('likes');
-        LikedPosts::where('post_id',$post->id)
-        ->update([
-            'Liked' => 'Yes'
+    public function followed($id,$userid){
+        $followeduser = User::where('id',$id)->first();
+        FollowedUsers::where('followeduser_id', $id)->where('user_id',$userid)->update([
+            'followed' => 'Yes'
         ]);
-        return redirect()->back();
+        return redirect()->back()->with('followeduser_success', 'You followed '.$followeduser->name);
     }
     /**
      * Store a newly created resource in storage.
@@ -102,7 +96,7 @@ class LikedPostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
