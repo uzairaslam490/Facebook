@@ -48,11 +48,10 @@ class FollowedUsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function followed($id,$userid){
-        $followeduser = User::where('id',$id)->first();
         FollowedUsers::where('followeduser_id', $id)->where('user_id',$userid)->update([
             'followed' => 'Yes'
         ]);
-        return redirect()->back()->with('followeduser_success', 'You followed '.$followeduser->name);
+        return redirect()->route('followerlikes',['id'=> $id, 'userid' =>$userid]);
     }
     /**
      * Store a newly created resource in storage.

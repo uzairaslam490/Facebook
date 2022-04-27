@@ -71,7 +71,8 @@ class UsersController extends Controller
         $user = User::all()->where('name', $name)->first();
         $UsersNotFollowed = User::where('id','!=',$user->id)->skip(0)->take(5)->with('followeduser')->get();
         $posts = Post::orderBy('updated_at', 'DESC')->where('user_id',$user->id)->with('likedposts')->get();
-        return view('index', compact('user', 'posts', 'UsersNotFollowed'));
+        $followedusersposts = FollowedUsers::where('user_id',$user->id)->where('followed', 'Yes')->with('posts')->get();
+        return view('index', compact('user', 'posts', 'UsersNotFollowed','followedusersposts'));
         }
         else{
             Auth::logout();
@@ -170,12 +171,13 @@ class UsersController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
+     * @param  int  $userid
      * @return \Illuminate\Http\Response
      */
-    public function comment($id)
+    public function comment($id, $userid)
     {
         $post = Post::all()->where('id', $id)->first();
-        $user = User::all()->where('id', $post->user_id)->first();
+        $user = User::all()->where('id', $userid)->first();
         $comments = Comments::all()->where('post_id',$id);
         return view('comments', compact('post', 'comments', 'user'));   
     }

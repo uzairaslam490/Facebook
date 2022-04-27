@@ -35,12 +35,13 @@ class CommentsController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
+     * @param  int  $userid
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(Request $request, $id, $userid)
     {
         $post = Post::all()->where('id', $id)->first();
-        $user = User::all()->where('id', $post->user_id)->first();
+        $user = User::all()->where('id', $userid)->first();
         $name = $user->name;
         $email = $user->email;
         $comment = $request->input('comment');

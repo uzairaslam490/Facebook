@@ -13,4 +13,7 @@ class Post extends Model
     public function likedposts(){
         return $this->hasOne(LikedPosts::class);
     }
+    public function followeduserposts(){
+        return $this->belongsTo(FollowedUsers::class, 'followeduser_id');
+    }
 }

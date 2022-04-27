@@ -48,17 +48,36 @@ class LikedPostsController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
+     * @param  int  $userid
      * @return \Illuminate\Http\Response
      */
-    public function likepost($id)
+    public function likepost($id, $userid)
     {
         $post = Post::where('id',$id)->first();
         Post::find($id)->increment('likes');
-        LikedPosts::where('post_id',$post->id)
+        LikedPosts::where('post_id',$post->id)->where('user_id', $userid)
         ->update([
             'Liked' => 'Yes'
         ]);
         return redirect()->back();
+    }
+
+     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function followerlikes($id,$userid)
+    {
+        $followeduser = User::where('id',$id)->first();
+        $posts = Post::where('user_id', $id)->get();
+        foreach($posts as $post){
+            LikedPosts::create([
+                'user_id' => $userid,
+                'post_id' => $post->id
+            ]);
+        }
+        return redirect()->back()->with('followeduser_success', 'You followed '.$followeduser->name);
     }
     /**
      * Store a newly created resource in storage.

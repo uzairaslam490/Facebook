@@ -38,7 +38,7 @@
                 @endforeach
                 <!--Fetching Existing Comment END-->
                <div class=""> 
-                    <form action="{{route('addcomment', ['id' => $post->id])}}" method="POST">
+                    <form action="{{route('addcomment', ['id' => $post->id, 'userid' => $user->id])}}" method="POST">
                         @csrf
                             <div class="card mb-3 bg-dark text-white">
                                 <div class="card-header">

@@ -37,11 +37,12 @@ Route::match(['get','post'],'/createpost/{id}', [UsersController::class, 'show']
 Route::match(['get','post'],'/addpost/{id}', [PostController::class, 'update'])->name('addpost');
 Route::match(['get','post'],'/deletepost/{id}', [PostController::class, 'destroy'])->middleware('auth')->name('deletepost');
 #Comments
-Route::match(['get','post'],'/comments/{id}', [UsersController::class, 'comment'])->middleware('auth')->name('comments');
-Route::match(['get','post'],'/addcomment/{id}', [CommentsController::class, 'store'])->middleware('auth')->name('addcomment');
+Route::match(['get','post'],'/comments/{id}/{userid}', [UsersController::class, 'comment'])->middleware('auth')->name('comments');
+Route::match(['get','post'],'/addcomment/{id}/{userid}', [CommentsController::class, 'store'])->middleware('auth')->name('addcomment');
 Route::match(['get','post'],'/deletecomment/{id}', [CommentsController::class, 'destroy'])->middleware('auth')->name('deletecomment');
 #Likes
 Route::match(['get','post'],'/likes/{id}', [LikedPostsController::class, 'likes'])->middleware('auth')->name('likes');
-Route::match(['get','post'],'/likepost/{id}', [LikedPostsController::class, 'likepost'])->middleware('auth')->name('likepost');
+Route::match(['get','post'],'/likepost/{id}/{userid}', [LikedPostsController::class, 'likepost'])->middleware('auth')->name('likepost');
+Route::match(['get','post'],'/followerlikes/{id}/{userid}', [LikedPostsController::class, 'followerlikes'])->middleware('auth')->name('followerlikes');
 #Logout
 Route::match(['get','post'],'/logout/{id}', [UsersController::class, 'userlogout'])->middleware('auth')->name('logout');
