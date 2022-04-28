@@ -30,7 +30,9 @@
                             <h6 class="lead">{{$comment->name}}</h6>
                             <p class="small">{{$comment->created_at}}</p>
                             <p>{{$comment->comment}}</p>
+                            @if($comment->name === $user->name)
                             <a href="{{route('deletecomment',['id' => $comment->id ])}}">Delete</a>
+                            @endif
                         </div>
                     </div>
                 </div>

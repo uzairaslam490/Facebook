@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FollowedUsers;
 use App\Models\LikedPosts;
 use App\Models\Post;
 use App\Models\User;
@@ -37,10 +38,17 @@ class LikedPostsController extends Controller
     public function likes($id)
     {
         $post = Post::orderBy('created_at', 'DESC')->get()->first();
+        $followedusers = FollowedUsers::where('user_id', $id)->where('followed', 'Yes')->get();
         LikedPosts::create([
             'user_id' => $id,
             'post_id' => $post->id
         ]);
+        foreach($followedusers as $followeduser){
+         LikedPosts::create([
+             'user_id' => $followeduser->followeduser_id,
+             'post_id' => $post->id
+         ]);   
+        }
         return redirect()->back()->with('post_success','Post Created Successfully!');
     }
 

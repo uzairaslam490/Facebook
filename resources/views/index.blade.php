@@ -29,63 +29,41 @@
         <div class="col-sm-8">
         @foreach($posts as $post)
             <div class="card mb-4 bg-dark text-white">
-                <h3 class="card-header"><span class="ml-1">{{$post->post}}</span>
+                <h3 class="card-header"><span class="ml-1">{{$post->post->post}}</span>
+                    @if($post->post->user_id === $user->id)
                     <button class="btn btn-secondary btn-sm dropdown-toggle" style="float:right;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         More
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="{{route('deletepost',['id' => $post->id ])}}">Delete Post</a>
+                        <a class="dropdown-item" href="{{route('deletepost',['id' => $post->post->id ])}}">Delete Post</a>
                     </div>
+                    @endif
                 </h3>
-                <img src="{{ asset('images')}}/{{ $post->image }}" style="max-height:450px; max-width:450px" class="img-fluid card-img-top">
+                <img src="{{ asset('images')}}/{{ $post->post->image }}" style="max-height:450px; max-width:450px" class="img-fluid card-img-top">
                 <div class="card-body">
                     <h4 class="card-title">
                         Posted by:
                         <span class="ml-1 mr-1">{{$user->name}}</span> at
-                        <span class="ml-2 mr-2">{{$post->created_at}}</span>
+                        <span class="ml-2 mr-2">{{$post->post->created_at}}</span>
                     </h4>
                    
-                    <a href="{{route('comments', ['id' => $post->id, 'userid' => $user->id])}}"><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-comments"></i>Comment
-                    {{$post->comments}}        
+                    <a href="{{route('comments', ['id' => $post->post->id, 'userid' => $user->id])}}"><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-comments"></i>Comment
+                    {{$post->post->comments}}        
                     </span></a>
-                    
-                    @if($post->likedposts->Liked === 'No' && $post->user_id === $post->likedposts->user_id)
-                    <a href="{{route('likepost', ['id' => $post->id, 'userid' => $user->id])}}"><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-thumbs-up"></i>Like
-                    {{$post->likes}}         
+                
+                    @if($post->Liked === 'No')
+                    <a href="{{route('likepost', ['id' => $post->post->id, 'userid' => $user->id])}}"><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-thumbs-up"></i>Like
+                    {{$post->post->likes}}         
                     </span></a>
                     <hr>
-                    @elseif($post->likedposts->Liked === 'Yes' && $post->user_id === $post->likedposts->user_id)
+                    @elseif($post->Liked === 'Yes')
                     <a href="{{route('timeline', ['userid' => $user->name])}}"><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-thumbs-up"></i>Like
-                    {{$post->likes}}         
+                    {{$post->post->likes}}         
                     </span></a>
                     <hr>
                     @endif
                 </div>
             </div>
-            @endforeach
-            @foreach($followedusersposts as $followeduserpost)
-                @foreach($followeduserpost->posts as $post)
-                <div class="card mb-4 bg-dark text-white">
-                <h3 class="card-header"><span class="ml-1">{{$post->post}}</span></h3>
-                <img src="{{ asset('images')}}/{{ $post->image }}" style="max-height:450px; max-width:450px" class="img-fluid card-img-top">
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            Posted by:
-                            <span class="ml-1 mr-1">{{$user->name}}</span> at
-                            <span class="ml-2 mr-2">{{$post->created_at}}</span>
-                        </h4>
-                   
-                        <a href="{{route('comments', ['id' => $post->id, 'userid' => $user->id])}}"><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-comments"></i>Comment
-                        {{$post->comments}}        
-                        </span></a>
-                    
-                        <a href="{{route('likepost', ['id' => $post->id, 'userid' => $user->id])}}"><span style="float: right;" class="badge badge-dark text-light"><i class="fas fa-thumbs-up"></i>Like
-                        {{$post->likes}}         
-                        </span></a>
-                        <hr>
-                    </div>
-                </div>
-                @endforeach
             @endforeach
         </div>
         <div class="col-sm-4">
