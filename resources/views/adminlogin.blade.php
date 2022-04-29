@@ -1,8 +1,7 @@
 @extends('layouts.default')
 
 @section('routes')
-<a href="{{route('adminlogin')}}" class="nav-link text-light">Admin</a>
-
+<a href="{{route('login')}}" class="nav-link text-light">User</a>
 @endsection
 
 @section('header')
@@ -10,7 +9,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h1><i class="fas fa-user" style="color: #27aae1;"></i> Login</h1>
+            <h1><i class="fas fa-user" style="color: #27aae1;"></i> AdminLogin</h1>
         </div>
     </div>
 </div>
@@ -39,7 +38,7 @@
                             <h1>Welcome Back!!</h1>
                         </div>
                         <div class="card-body bg-dark">
-                        <form action="{{route('confirmlogin')}}"  method="POST">
+                        <form action="{{route('confirmadminlogin')}}"  method="POST">
                             @csrf
                             <div class="form-group">
                                 <label for="name"><span class="FieldInfo">Username:</span></label>
@@ -61,7 +60,6 @@
                             </div><br>
                             <input type="submit" name="Submit" class="btn btn-info btn-block" value="Login">
                         </form>
-                        <span style="float:left;">Don't have an account? <a href="{{route('signup')}}">Sign Up</a></span>
                     </div>
                 </div>
             </div>

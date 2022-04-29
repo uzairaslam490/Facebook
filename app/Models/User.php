@@ -46,4 +46,7 @@ class User extends Authenticatable
     public function followeduser(){
         return $this->hasOne(FollowedUsers::class,'followeduser_id');
     }
+    public function post(){
+        return $this->belongsTo(Post::class);
+    }
 }

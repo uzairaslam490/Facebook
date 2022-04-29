@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UsersController;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+#User
 Auth::routes();
 #SignUp
 Route::match(['get','post'],'/SignUp', [UsersController::class, 'signup'])->name('signup');
@@ -46,3 +47,18 @@ Route::match(['get','post'],'/likepost/{id}/{userid}', [LikedPostsController::cl
 Route::match(['get','post'],'/followerlikes/{id}/{userid}', [LikedPostsController::class, 'followerlikes'])->middleware('auth')->name('followerlikes');
 #Logout
 Route::match(['get','post'],'/logout/{id}', [UsersController::class, 'userlogout'])->middleware('auth')->name('logout');
+
+#Admin
+
+#Login
+Route::match(['get','post'],'/admin', [AdminController::class, 'login'])->name('adminlogin');
+Route::match(['get','post'],'/confirmadminlogin', [AdminController::class, 'confirmlogin'])->name('confirmadminlogin');
+
+#Dashboard
+Route::match(['get','post'],'/dashboard/{adminid}', [AdminController::class, 'dashboard'])->middleware('authadmin')->name('dashboard');
+
+#AddAdmin
+Route::match(['get','post'],'/addadmin/{adminid}', [AdminController::class, 'addadmin'])->middleware('authadmin')->name('addadmin');
+Route::match(['get','post'],'/newadmin', [AdminController::class, 'newadmin'])->middleware('authadmin')->name('newadmin');
+#logout
+Route::match(['get','post'],'/adminlogout/{id}', [AdminController::class, 'adminlogout'])->middleware('authadmin')->name('adminlogout');
