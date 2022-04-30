@@ -4,9 +4,9 @@
 @section('routes')
 <a href="" class="nav-item nav-link"><i class="fas fa-user text-success"></i> My Profile</a>
 <a href="{{route('dashboard',['adminid' => $admin->name])}}" class="nav-item nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-<a href="" class="nav-item nav-link">Posts</a>
+<a href="{{route('posts', ['adminid' => $admin->name])}}" class="nav-item nav-link">Posts</a>
 <a href="{{route('addadmin', ['adminid' => $admin->name])}}" class="nav-item nav-link">Manage Admins</a>
-<a href="" class="nav-item nav-link"><i class="fas fa-comments"></i> Comments</a>
+<a href="{{route('tablecomments', ['adminid'=> $admin->name])}}" class="nav-item nav-link"><i class="fas fa-comments"></i> Comments</a>
 @endsection
 
 @section('logout')
@@ -82,7 +82,7 @@
                                 <td>{{$post->likes}}</td>
                                 <td>{{$post->comments}}</td>
                                 <td>
-                                    <a href="" target="_blank" class="btn btn-info">Preview</a>
+                                    <a href="{{route('fullpost',['adminid' => $admin->name,'id' => $post->id])}}" target="_blank" class="btn btn-info">Preview</a>
                                 </td>
                             </tr>
                         @endforeach

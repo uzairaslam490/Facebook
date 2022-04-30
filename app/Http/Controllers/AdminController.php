@@ -137,6 +137,50 @@ class AdminController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  string  $name
+     * @return \Illuminate\Http\Response
+     */
+    public function posts($name)
+    {
+        $admin = Admin::where('name', $name)->get()->first();
+        $posts = Post::all();
+        $users = User::all();
+        return view('posts',compact('admin','users','posts'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  string  $name
+     * @return \Illuminate\Http\Response
+     */
+    public function comments($name)
+    {
+        $admin = Admin::where('name', $name)->get()->first();
+        $comments = Comments::all();
+        $posts = Post::all();
+        $users = User::all();
+        return view('tablecomments',compact('admin','comments','posts','users'));
+    }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  string  $adminid
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function fullpost($adminid,$id)
+    {
+        $post = Post::where('id',$id)->with('user')->get()->first();
+        $comments = Comments::where('post_id', $post->id)->get();
+        return view('fullpost',compact('post','comments'));
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

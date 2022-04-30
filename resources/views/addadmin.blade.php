@@ -4,9 +4,9 @@
 @section('routes')
 <a href="" class="nav-item nav-link"><i class="fas fa-user text-success"></i> My Profile</a>
 <a href="{{route('dashboard',['adminid' => $admin->name])}}" class="nav-item nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-<a href="" class="nav-item nav-link">Posts</a>
+<a href="{{route('posts', ['adminid' => $admin->name])}}" class="nav-item nav-link">Posts</a>
 <a href="{{route('addadmin', ['adminid' => $admin->name])}}" class="nav-item nav-link">Manage Admins</a>
-<a href="" class="nav-item nav-link"><i class="fas fa-comments"></i> Comments</a>
+<a href="{{route('tablecomments', ['adminid'=> $admin->name])}}" class="nav-item nav-link"><i class="fas fa-comments"></i> Comments</a>
 @endsection
 
 @section('logout')
@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6 mb-2">
-                                        <a href="route('dashboard',['adminid' => $admin->name])" class="btn btn-warning btn-block"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+                                        <a href="{{route('dashboard',['adminid' => $admin->name])}}" class="btn btn-warning btn-block"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
                                     </div>
                                     <div class="col-lg-6 mb-2">
                                         <button type="submit" name="Submit" class="btn btn-success btn-block">

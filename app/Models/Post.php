@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Egulias\EmailValidator\Warning\Comment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +18,9 @@ class Post extends Model
         return $this->belongsTo(FollowedUsers::class, 'followeduser_id');
     }
     public function user(){
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
+    }
+    public function comments(){
+        return $this->hasMany(Comments::class);
     }
 }

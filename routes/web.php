@@ -60,5 +60,13 @@ Route::match(['get','post'],'/dashboard/{adminid}', [AdminController::class, 'da
 #AddAdmin
 Route::match(['get','post'],'/addadmin/{adminid}', [AdminController::class, 'addadmin'])->middleware('authadmin')->name('addadmin');
 Route::match(['get','post'],'/newadmin', [AdminController::class, 'newadmin'])->middleware('authadmin')->name('newadmin');
+
+#Posts
+Route::match(['get','post'],'/posts/{adminid}', [AdminController::class, 'posts'])->middleware('authadmin')->name('posts');
+Route::match(['get','post'],'/fullpost/{adminid}/{id}', [AdminController::class, 'fullpost'])->middleware('authadmin')->name('fullpost');
+
+#Comments
+Route::match(['get','post'],'/tablecomments/{adminid}', [AdminController::class, 'comments'])->middleware('authadmin')->name('tablecomments');
+
 #logout
 Route::match(['get','post'],'/adminlogout/{id}', [AdminController::class, 'adminlogout'])->middleware('authadmin')->name('adminlogout');
