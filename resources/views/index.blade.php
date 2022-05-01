@@ -43,7 +43,14 @@
                 <div class="card-body">
                     <h4 class="card-title">
                         Posted by:
-                        <span class="ml-1 mr-1">{{$user->name}}</span> at
+                        @foreach($UsersNotFollowed as $followeduser)
+                            @if($post->post->user_id === $followeduser->followeduser->followeduser_id)
+                            <span class="ml-1 mr-1">{{$followeduser->name}}</span> at
+                            @endif
+                        @endforeach
+                        @if($post->post->user_id === $user->id)
+                            <span class="ml-1 mr-1">{{$user->name}}</span> at
+                        @endif
                         <span class="ml-2 mr-2">{{$post->post->created_at}}</span>
                     </h4>
                    
