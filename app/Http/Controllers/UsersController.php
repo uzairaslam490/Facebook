@@ -88,6 +88,9 @@ class UsersController extends Controller
     public function userlogout($id){
         $user = User::where('id',$id);
         if($user){
+            User::where('id',$id)->update([
+                'loggedIn' => 'No'
+            ]);
             Auth::logout($user);
             return redirect('/');
         }
@@ -127,6 +130,9 @@ class UsersController extends Controller
         //     //     return redirect('/Profile/'.$userid)->with('user', $username);
         //     // }
             if(Auth::attempt(['name'=>$name, 'password'=>$password])){
+                User::where('name',$name)->update([
+                    'loggedIn' => 'Yes'
+                ]);
                 return redirect()->intended('/Profile/'.$user->name)->with('user',$user->name);
             }
         //}
